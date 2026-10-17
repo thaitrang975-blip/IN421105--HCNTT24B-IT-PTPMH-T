@@ -1,9 +1,27 @@
+using System;
 namespace EduHub.Ch01.Domain;
-
-/// <summary>
-/// Đại diện cho thông tin điểm danh của thành viên tại một sự kiện.
-/// </summary>
+// Ghi nhận điểm danh tại Event
 public class CheckIn
 {
-    // Bạn sẽ thêm các thuộc tính (Property) vào đây sau
+    public Guid Id { get; private set; }
+    public Guid RegistrationId { get; private set; }
+    public DateTime CheckedInAt { get; private set; }
+    public CheckInMethod Method { get; private set; }
+
+    private CheckIn() { }
+    // tạo dữ liệu Check-in.
+    public static CheckIn Create(Guid registrationId, CheckInMethod method)
+    {
+        return new CheckIn
+        {
+            Id = Guid.NewGuid(),
+            RegistrationId = registrationId,
+            CheckedInAt = DateTime.Now,
+            Method = method
+        };
+    }
+
+    /// Trả về chuỗi tóm tắt thông tin điểm danh.
+    /// 
+    public string Summary() => $"[Check-in ID: {Id}] - Thoi gian: {CheckedInAt:HH:mm dd/MM/yyyy} - Hinh thuc: {Method}";
 }
